@@ -2,7 +2,7 @@ import time, urllib, hmac, hashlib
 
 
 def generate_nonce():
-    return int(round(time.time() + 3600))
+    return int(round(time.time() * 1000))
 
 
 # Generates an API signature.

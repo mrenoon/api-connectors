@@ -14,5 +14,5 @@ setup(name='bitmex-ws',
       install_requires=[
           'websocket-client==0.53.0',
       ],
-      packages=['', 'util'],
+      packages=['.', 'util'],
       )

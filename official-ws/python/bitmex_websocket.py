@@ -136,10 +136,10 @@ class BitMEXWebsocket:
             self.logger.info("Authenticating with API Key.")
             # To auth to the WS using an API key, we generate a signature of a nonce and
             # the WS API endpoint.
-            expires = generate_nonce()
+            nonce = generate_nonce()
             return [
-                "api-expires: " + str(expires),
-                "api-signature: " + generate_signature(self.api_secret, 'GET', '/realtime', expires, ''),
+                "api-nonce: " + str(nonce),
+                "api-signature: " + generate_signature(self.api_secret, 'GET', '/realtime', nonce, ''),
                 "api-key:" + self.api_key
             ]
         else:
@@ -153,7 +153,7 @@ class BitMEXWebsocket:
         '''
 
         # You can sub to orderBookL2 for all levels, or orderBook10 for top 10 levels & save bandwidth
-        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "position", "quote", "trade", "quoteBin1m", "tradeBin1m"]
+        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "position", "quote", "trade", "quoteBin1m"]
         genericSubs = ["margin"]
 
         subscriptions = [sub + ':' + self.symbol for sub in symbolSubs]
@@ -181,7 +181,7 @@ class BitMEXWebsocket:
             args = []
         self.ws.send(json.dumps({"op": command, "args": args}))
 
-    def __on_message(self, message):
+    def __on_message(self, ws, message):
         '''Handler for parsing WS messages.'''
         message = json.loads(message)
         self.logger.debug(json.dumps(message))
@@ -238,17 +238,17 @@ class BitMEXWebsocket:
         except:
             self.logger.error(traceback.format_exc())
 
-    def __on_error(self, error):
+    def __on_error(self, ws, error):
         '''Called on fatal websocket errors. We exit on these.'''
         if not self.exited:
             self.logger.error("Error : %s" % error)
             raise websocket.WebSocketException(error)
 
-    def __on_open(self):
+    def __on_open(self, ws):
         '''Called when the WS opens.'''
         self.logger.debug("Websocket Opened.")
 
-    def __on_close(self):
+    def __on_close(self, ws):
         '''Called on websocket close.'''
         self.logger.info('Websocket Closed')
 
