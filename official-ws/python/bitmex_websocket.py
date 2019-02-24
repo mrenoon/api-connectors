@@ -153,7 +153,8 @@ class BitMEXWebsocket:
         '''
 
         # You can sub to orderBookL2 for all levels, or orderBook10 for top 10 levels & save bandwidth
-        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "orderBookL2_25", "position", "quote", "trade"]
+        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "orderBookL2_25", "position", "quote", "trade", "quoteBin1m", "tradeBin1m"]
+        # symbolSubs = ["execution", "instrument", "order", "orderBookL2", "orderBookL2_25", "position", "quote", "trade"]
         genericSubs = ["margin"]
 
         subscriptions = [sub + ':' + self.symbol for sub in symbolSubs]
