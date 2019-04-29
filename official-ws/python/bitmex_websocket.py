@@ -20,7 +20,7 @@ from util.api_key import generate_nonce, generate_signature
 class BitMEXWebsocket:
 
     # Don't grow a table larger than this amount. Helps cap memory usage.
-    MAX_TABLE_LEN = 200
+    MAX_TABLE_LEN = 2000
 
     def __init__(self, endpoint, symbol, api_key=None, api_secret=None):
         '''Connect to the websocket and initialize data stores.'''

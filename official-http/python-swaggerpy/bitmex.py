@@ -5,7 +5,7 @@ from bravado.requests_client import RequestsClient
 from BitMEXAPIKeyAuthenticator import APIKeyAuthenticator
 
 
-def bitmex(test=True, config=None, api_key=None, api_secret=None):
+def bitmex(test=True, config=None, api_key=None, api_secret=None, local=False):
 
     if config is None:
         # See full config options at http://bravado.readthedocs.io/en/latest/configuration.html
@@ -20,6 +20,8 @@ def bitmex(test=True, config=None, api_key=None, api_secret=None):
 
     if test:
         host = 'https://testnet.bitmex.com'
+    elif local:
+        host = 'http://localhost:4444'
     else:
         host = 'https://www.bitmex.com'
 

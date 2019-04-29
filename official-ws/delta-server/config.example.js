@@ -16,11 +16,11 @@ module.exports = {
   // ["instrument","orderBookL2","quote","trade"]
   // Private:
   // ["execution","margin","order","position"]
-  streams: ["instrument","orderBookL2","quote","trade"],
+  streams: ["instrument","orderBookL2","quote","trade", "position"],
 
   // If you want to use any of the above "private" streams, you must authenticate with an API Key.
-  apiKeyID: '',
-  apiKeySecret: '',
+  apiKeyID: process.env.BITMEX_API_KEY,
+  apiKeySecret: process.env.BITMEX_API_SECRET,
 
   // This prevents memory usage from getting out of control. Tweak to your needs.
   maxTableLen: 10000,

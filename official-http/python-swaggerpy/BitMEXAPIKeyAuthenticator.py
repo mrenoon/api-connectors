@@ -27,7 +27,7 @@ class APIKeyAuthenticator(Authenticator):
     # Add the proper headers via the `expires` scheme.
     def apply(self, r):
         # 5s grace period in case of clock skew
-        expires = int(round(time.time()) + 5)
+        expires = int(round(time.time()) + 15)
         r.headers['api-expires'] = str(expires)
         r.headers['api-key'] = self.api_key
         prepared = r.prepare()
@@ -62,4 +62,3 @@ class APIKeyAuthenticator(Authenticator):
 
         signature = hmac.new(bytes(secret, 'utf-8'), message, digestmod=hashlib.sha256).hexdigest()
         return signature
-
