@@ -5,6 +5,7 @@ from time import sleep
 import json
 import logging
 import urllib
+import sys
 import math
 from util.api_key import generate_nonce, generate_signature
 
@@ -233,7 +234,11 @@ class BitMEXWebsocket:
                     # Locate the item in the collection and remove it.
                     for deleteData in message['data']:
                         item = findItemByKeys(self.keys[table], self.data[table], deleteData)
-                        self.data[table].remove(item)
+                        try:
+                            self.data[table].remove(item)
+                        except Exception as e:
+                            print("Getting exception while removing data: ", e, " Exiting now!!")
+                            sys.exit()
                 else:
                     raise Exception("Unknown action: %s" % action)
         except:
